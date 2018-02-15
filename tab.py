@@ -381,8 +381,80 @@ for item in players:
 players=players_dict
 
 #rounds
-    
+rounds_start=raw_string.find(""","ballots":[""")
+rounds_string=raw_string[rounds_start+100:] #hacky
+rounds_start=rounds_string.find(""","ballots":[""")
+rounds_string=rounds_string[rounds_start+12:]
+rounds=rounds_string.split("""},{"teams":""")
+rounds[-1]=rounds[-1].split(""","ballotsPerMatch":""")[0][:-2]
+
+rounds_dict={}
+
+for item in rounds:
+    tmp=item.split(""","skillIndex":""")
+    tmp=tmp[0]
+    teams=tmp.split(""","presence":""")[0]
+
+    ballot_id=tmp.split(""","id":""")[1].split(""","votes":""")[0][1:-1]
+    rounds_dict[ballot_id]={}
+
+    rounds_dict[ballot_id]["Teams"]=teams
+
+    votes=tmp.split(""","votes":""")[1].split(""","judges":""")[0]
+    judge=votes.split("""{"judge":""")
+
+    rounds_dict[ballot_id]["Judges"]={}
+
+    judge1=judge[1]
+    judge1_id=judge1.split(""","ballots":""")[0]
+    rounds_dict[ballot_id]["Judges"][judge1_id]={}
+    ballots_prop1=judge1.split(""","prop":""")[1].split(""","opp":""")[0]
+    ballots_opp1=judge1.split(""","opp":""")[1].split(""","scores":""")[0]
+    rounds_dict[ballot_id]["Judges"][judge1_id]["Ballots_Prop"]=ballots_prop1
+    rounds_dict[ballot_id]["Judges"][judge1_id]["Ballots_Opp"]=ballots_opp1
+    judge1_scores=judge1.split(""","scores":""")[1][1:-3]
+    judge1_scores_prop=judge1_scores.split("],[")[0][1:].split(",")
+    rounds_dict[ballot_id]["Judges"][judge1_id]["Scores_Prop"]=judge1_scores_prop
+    judge1_scores_opp=judge1_scores.split("],[")[1][:-1].split(",")
+    rounds_dict[ballot_id]["Judges"][judge1_id]["Scores_Opp"]=judge1_scores_opp
         
+    if len(judge)==4:
+        judge2=judge[2]
+        judge3=judge[3]
+        judge2_id=judge2.split(""","ballots":""")[0]
+        judge3_id=judge3.split(""","ballots":""")[0]
+        rounds_dict[ballot_id]["Judges"][judge2_id]={}
+        rounds_dict[ballot_id]["Judges"][judge3_id]={}
+        ballots_prop2=judge2.split(""","prop":""")[1].split(""","opp":""")[0]
+        ballots_opp2=judge2.split(""","opp":""")[1].split(""","scores":""")[0]
+        rounds_dict[ballot_id]["Judges"][judge2_id]["Ballots_Prop"]=ballots_prop2
+        rounds_dict[ballot_id]["Judges"][judge2_id]["Ballots_Opp"]=ballots_opp2
+        ballots_prop3=judge3.split(""","prop":""")[1].split(""","opp":""")[0]
+        ballots_opp3=judge3.split(""","opp":""")[1].split(""","scores":""")[0]
+        rounds_dict[ballot_id]["Judges"][judge3_id]["Ballots_Prop"]=ballots_prop3
+        rounds_dict[ballot_id]["Judges"][judge3_id]["Ballots_Opp"]=ballots_opp3
+        judge2_scores=judge2.split(""","scores":""")[1][1:-3]
+        judge2_scores_prop=judge2_scores.split("],[")[0][1:].split(",")
+        rounds_dict[ballot_id]["Judges"][judge2_id]["Scores_Prop"]=judge2_scores_prop
+        judge2_scores_opp=judge2_scores.split("],[")[1][:-1].split(",")
+        rounds_dict[ballot_id]["Judges"][judge2_id]["Scores_Opp"]=judge2_scores_opp
+        judge3_scores=judge3.split(""","scores":""")[1][1:-3]
+        judge3_scores_prop=judge3_scores.split("],[")[0][1:].split(",")
+        rounds_dict[ballot_id]["Judges"][judge3_id]["Scores_Prop"]=judge3_scores_prop
+        judge3_scores_opp=judge3_scores.split("],[")[1][:-1].split(",")
+        rounds_dict[ballot_id]["Judges"][judge3_id]["Scores_Opp"]=judge3_scores_opp
+    
+    roles=item.split(""","roles":[[""")[1].split("""]],"skillIndex":""")[0].split("],[")
+    roles_prop=roles[0].split(",")
+    roles_opp=roles[1].split(",")
+    rounds_dict[ballot_id]["Roles"]={}
+    rounds_dict[ballot_id]["Roles"]["Roles_Prop"]=roles_prop
+    rounds_dict[ballot_id]["Roles"]["Roles_Opp"]=roles_opp
+
+rounds=rounds_dict
+
+
+
 
 
     
