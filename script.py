@@ -599,26 +599,89 @@ for r in speaks:
         for j in speaks[r][b]:
             for p in speaks[r][b][j]:
                 pers_speaks[p][r].append(speaks[r][b][j][p])
+
+speaksbyround={}
+for name in pers_speaks:  
+    speaksbyround[name]={}
+    for r in speaks:
+        allspeaks=pers_speaks[name][r]
+        intspeaks=[]
+        for score in allspeaks:
+            intspeaks.append(int(score))
+        try:
+            speaksbyround[name][r]=round(sum(intspeaks)/len(intspeaks),2)
+        except:
+            speaksbyround[name][r]=""
+
+allspeaks={}
+for name in pers_speaks:
+    totalspeaks=[]
+    for r in speaks:
+        totalspeaks.append(speaksbyround[name][r])
+    try:
+        allspeaks[name]=round(sum(totalspeaks)/len(totalspeaks), 2)
+    except:
+        allspeaks[name]=""
             
     
+teamballots={}
+for name in teams:
+    teamballots[name]={}
+    for r in rounds:
+        teamballots[name][r]=[]
+        for b in rounds[r]:
+            for j in rounds[r][b]["Judges"]:
+                if name==rounds[r][b]["Teams"][0]:
+                    teamballots[name][r].append(rounds[r][b]["Judges"][j]["Ballots_Prop"])
+                if name==rounds[r][b]["Teams"][1]:
+                    teamballots[name][r].append(rounds[r][b]["Judges"][j]["Ballots_Opp"])
+            
+speakerjudges={}
+for name in players:
+    speakerjudges[name]={}
+    for r in rounds:
+        speakerjudges[name][r]=[]
+        for b in rounds[r]:
+            for j in rounds[r][b]["Judges"]:
+                if name in rounds[r][b]["Roles_Prop"] or name in rounds[r][b]["Roles_Opp"]:
+                    speakerjudges[name][r].append(j)
+
 teamwins={}
 for name in teams:
     teamwins[name]={}
     for r in rounds:
-        teamwins[name][r]=[]
+        ballots=teamballots[name][r]
+        newballots=[]
+        for b in ballots:
+            newballots.append(int(b))
+        if sum(newballots)>=2:
+            teamwins[name][r]="1"
+        else:
+            teamwins[name][r]="0"
+
+totalwins={}
+for name in teams:
+    wins=[]
+    for r in rounds:
+        for w in teamwins[name][r]:
+            wins.append(int(w))
+    totalwins[name]=sum(wins)
+
+teamjudges={}
+for name in judges:
+    teamjudges[name]={}
+    for r in rounds:
+        teamjudges[name][r]=[]
         for b in rounds[r]:
-            for j in rounds[r][b]["Judges"]:
-                if name==rounds[r][b]["Teams"][0]:
-                    teamwins[name][r].append(rounds[r][b]["Judges"][j]["Ballots_Prop"])
-                if name==rounds[r][b]["Teams"][1]:
-                    teamwins[name][r].append(rounds[r][b]["Judges"][j]["Ballots_Opp"])
-            
-outf=filedialog.asksaveasfilename(initialdir = "/",title = "Vali asukoht",filetypes = (("csv fail","*.csv"),("kõik failid","*.*")))
+            if name in list(rounds[r][b]["Judges"].keys()):
+                teamjudges[name][r]=rounds[r][b]["Teams"]
+        
 
+outf=filedialog.asksaveasfilename(initialdir = "/",title = "Vali asukoht",filetypes = (("csv fail","*.csv"),("kõik failid","*.*")))               
 
-speaker_header=("SPEAKER;TEAM;SCHOOL;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3\n")
-team_header=("TEAM;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3\n")
-judge_header=("JUDGE\n")
+speaker_header=("SPEAKER;TEAM;SCHOOL;TOTALAVG;R1AVG;R2AVG;R3AVG;R4AVG;R5AVG;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1J;R2J;R3J;R4J;R5J\n")
+team_header=("TEAM;TOTAL;R1;R2;R3;R4;R4;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3\n")
+judge_header=("JUDGE;R1P;R1O;R2P;R20;R3P;R3O;R4P;R4O;R5P;R5O\n")
 
 if outf[-4:]!=".csv":
     outf=outf+".csv"
@@ -644,8 +707,18 @@ for speaker in players:
     except:
         f.write(";")
 
+    #total
+    try:
+        f.write(str(allspeaks[speaker])+";")
+    except:
+        f.write(";")
+
     #round1
     r=list(rounds.keys())[0]
+    try:
+        f.write(str(speaksbyround[speaker][r])+";")
+    except:
+        f.write(";")
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
@@ -662,6 +735,10 @@ for speaker in players:
     #round2
     r=list(rounds.keys())[1]
     try:
+        f.write(str(speaksbyround[speaker][r])+";")
+    except:
+        f.write(";")
+    try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
         f.write(";")
@@ -676,6 +753,10 @@ for speaker in players:
 
     #round3
     r=list(rounds.keys())[2]
+    try:
+        f.write(str(speaksbyround[speaker][r])+";")
+    except:
+        f.write(";")
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
@@ -692,6 +773,10 @@ for speaker in players:
     #round4
     r=list(rounds.keys())[3]
     try:
+        f.write(str(speaksbyround[speaker][r])+";")
+    except:
+        f.write(";")
+    try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
         f.write(";")
@@ -707,6 +792,10 @@ for speaker in players:
     #round5
     r=list(rounds.keys())[4]
     try:
+        f.write(str(speaksbyround[speaker][r])+";")
+    except:
+        f.write(";")
+    try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
         f.write(";")
@@ -715,9 +804,17 @@ for speaker in players:
     except:
         f.write(";")
     try:
-        f.write(pers_speaks[speaker][r][2]+"")
+        f.write(pers_speaks[speaker][r][2]+";")
     except:
-        f.write("")
+        f.write(";")
+
+    #judges
+    roundids=list(rounds.keys())
+    f.write(str(speakerjudges[speaker][roundids[0]])+";")
+    f.write(str(speakerjudges[speaker][roundids[1]])+";")
+    f.write(str(speakerjudges[speaker][roundids[2]])+";")
+    f.write(str(speakerjudges[speaker][roundids[3]])+";")
+    f.write(str(speakerjudges[speaker][roundids[4]])+";")
 
     #newline
     f.write("\n")
@@ -729,19 +826,30 @@ for team in teams:
     #name
     f.write(team+";")
 
+    #total
+    f.write(str(totalwins[team])+";")
+
+    #wins
+    roundids=list(rounds.keys())
+    f.write(teamwins[team][roundids[0]]+";")
+    f.write(teamwins[team][roundids[1]]+";")
+    f.write(teamwins[team][roundids[2]]+";")
+    f.write(teamwins[team][roundids[3]]+";")
+    f.write(teamwins[team][roundids[4]]+";")
+
     #round1
     r=list(rounds.keys())[0]
 
     try:
-        f.write(teamwins[team][r][0]+";")
+        f.write(teamballots[team][r][0]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][1]+";")
+        f.write(teamballots[team][r][1]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][2]+";")
+        f.write(teamballots[team][r][2]+";")
     except:
         f.write(";")
 
@@ -749,15 +857,15 @@ for team in teams:
     r=list(rounds.keys())[1]
 
     try:
-        f.write(teamwins[team][r][0]+";")
+        f.write(teamballots[team][r][0]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][1]+";")
+        f.write(teamballots[team][r][1]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][2]+";")
+        f.write(teamballots[team][r][2]+";")
     except:
         f.write(";")
 
@@ -765,15 +873,15 @@ for team in teams:
     r=list(rounds.keys())[2]
 
     try:
-        f.write(teamwins[team][r][0]+";")
+        f.write(teamballots[team][r][0]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][1]+";")
+        f.write(teamballots[team][r][1]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][2]+";")
+        f.write(teamballots[team][r][2]+";")
     except:
         f.write(";")
 
@@ -781,15 +889,15 @@ for team in teams:
     r=list(rounds.keys())[3]
 
     try:
-        f.write(teamwins[team][r][0]+";")
+        f.write(teamballots[team][r][0]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][1]+";")
+        f.write(teamballots[team][r][1]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][2]+";")
+        f.write(teamballots[team][r][2]+";")
     except:
         f.write(";")
 
@@ -797,17 +905,17 @@ for team in teams:
     r=list(rounds.keys())[4]
 
     try:
-        f.write(teamwins[team][r][0]+";")
+        f.write(teamballots[team][r][0]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][1]+";")
+        f.write(teamballots[team][r][1]+";")
     except:
         f.write(";")
     try:
-        f.write(teamwins[team][r][2]+"")
+        f.write(teamballots[team][r][2]+";")
     except:
-        f.write("")
+        f.write(";")
 
     #newline
     f.write("\n")
@@ -815,8 +923,19 @@ for team in teams:
 #judges
 f.write(judge_header)
 
-for judge in judges:
-    f.write(judge+"\n")
+
+for judge in teamjudges:
+    f.write(judge+";")
+
+    for r in rounds:
+        try:
+            f.write(teamjudges[judge][r][0]+";")
+            f.write(teamjudges[judge][r][1]+";")
+        except:
+            f.write(";;")
+
+    #newline
+    f.write("\n")
 
 f.close()
 
