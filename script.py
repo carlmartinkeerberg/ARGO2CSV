@@ -689,9 +689,13 @@ if outf[-4:]!=".csv":
 f=open(outf, "w", encoding="UTF-8")
 
 #speakers
-
+c=0
+f.write("#;")
 f.write(speaker_header)
 for speaker in players:
+    #id
+    f.write(str(c)+";")
+    
     #name
     f.write(speaker+";")
 
@@ -819,10 +823,17 @@ for speaker in players:
     #newline
     f.write("\n")
 
+    c+=1
+
 #teams
+f.write("#;")
 f.write(team_header)
 
+c=0
 for team in teams:
+    #id
+    f.write(str(c)+";")
+    
     #name
     f.write(team+";")
 
@@ -920,11 +931,16 @@ for team in teams:
     #newline
     f.write("\n")
 
-#judges
-f.write(judge_header)
+    c+=1
 
+#judges
+f.write("#;")
+f.write(judge_header)
+c=0
 
 for judge in teamjudges:
+    #id
+    f.write(str(c)+";")
     f.write(judge+";")
 
     for r in rounds:
@@ -936,6 +952,8 @@ for judge in teamjudges:
 
     #newline
     f.write("\n")
+
+    c+=1
 
 f.close()
 
