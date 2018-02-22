@@ -9,7 +9,9 @@ output:
 tab = read.csv("https://github.com/carlmartinkeerberg/ARGO2CSV/raw/master/IIetapp.csv",
                header = T,
                sep = ";",
-               encoding = "UTF-8")
+               encoding = "UTF-8",
+               dec = ".",
+               stringsAsFactors = F)
 
 speakers = tab[c(1:62),]
 
