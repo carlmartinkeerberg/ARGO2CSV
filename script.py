@@ -675,12 +675,23 @@ for name in judges:
         for b in rounds[r]:
             if name in list(rounds[r][b]["Judges"].keys()):
                 teamjudges[name][r]=rounds[r][b]["Teams"]
+
+opponents={}
+for team in teams:
+    opponents[team]={}
+    for r in rounds:
+        for b in rounds[r]:
+            if rounds[r][b]["Teams"][0]==team:
+                opponents[team][r]=rounds[r][b]["Teams"][1]
+            elif rounds[r][b]["Teams"][1]==team:
+                opponents[team][r]=rounds[r][b]["Teams"][0]
+            
         
 
 outf=filedialog.asksaveasfilename(initialdir = "/",title = "Vali asukoht",filetypes = (("csv fail","*.csv"),("kõik failid","*.*")))               
 
 speaker_header=("SPEAKER;TEAM;SCHOOL;TOTALAVG;R1AVG;R2AVG;R3AVG;R4AVG;R5AVG;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1J;R2J;R3J;R4J;R5J\n")
-team_header=("TEAM;TOTAL;R1;R2;R3;R4;R4;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3\n")
+team_header=("TEAM;TOTAL;R1;R2;R3;R4;R4;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1VS;R2VS;R3VS;R4VS;R5VS\n")
 judge_header=("JUDGE;R1P;R1O;R2P;R20;R3P;R3O;R4P;R4O;R5P;R5O\n")
 
 if outf[-4:]!=".csv":
@@ -925,6 +936,29 @@ for team in teams:
         f.write(";")
     try:
         f.write(teamballots[team][r][2]+";")
+    except:
+        f.write(";")
+
+    #opponents
+    roundids=list(rounds.keys())
+    try:
+        f.write(opponents[team][roundids[0]]+";")
+    except:
+        f.write(";")
+    try:
+        f.write(opponents[team][roundids[1]]+";")
+    except:
+        f.write(";")
+    try:
+        f.write(opponents[team][roundids[2]]+";")
+    except:
+        f.write(";")
+    try:
+        f.write(opponents[team][roundids[3]]+";")
+    except:
+        f.write(";")
+    try:
+        f.write(opponents[team][roundids[4]]+";")
     except:
         f.write(";")
 
