@@ -124,42 +124,11 @@ $(document).ready(function () {
 </div>
 
 
-<pre class="r"><code>tab=read.csv(&quot;C:/Users/carlm/Desktop/tab.csv&quot;, header=F, sep=&quot;;&quot;, encoding=&quot;UTF-8&quot;)
-speakers=tab[c(1:63),]
-print(speakers$V2)</code></pre>
-<pre><code>##  [1] SPEAKER                  Karl Aaron Adson        
-##  [3] Marie Maisvee            Ela Lõhmus              
-##  [5] Joosep Radusepp          Mikkel Mäkelä           
-##  [7] Kirke Külvik             Markus Vaher            
-##  [9] Robert Sarnet            Jan Seilenthal          
-## [11] Mari-Liis Lillebach      Christina Kiik          
-## [13] Hans Kristjan Veri       Anniki Mikelsaar        
-## [15] Johanna Issak            Brett-Peter Rästas      
-## [17] Hendry Ollin             Mia Maripuu             
-## [19] Uko Rasmus Tildemann     Juudit Lindsalu         
-## [21] Mihkel Mariusz Jezierski Kätriin Pullerits       
-## [23] Õnnely Roos              Arianna Sofia Jater     
-## [25] Kristiina Krause         Oskar Samuel Rebane     
-## [27] Saskia Bergmann          Triinu Jõgi             
-## [29] Marta Margareeta Bender  Triinu Lota Lepp        
-## [31] Kaur Hannes Käämbre      Lotta Vaher             
-## [33] Kirke Antsmäe            Kadri Muuga             
-## [35] Aleksander Vunk          Tom Siuste              
-## [37] Karl-Endrik Kriis        Gertin Kender           
-## [39] Karl Oskar Pungas        Mattias Allpere         
-## [41] Norman de Vries          Eva Lotta Mett          
-## [43] Anette Andersoo          James Paul Arney        
-## [45] Karoliine Pärlin         Markus Laanoja          
-## [47] Marie Valdes             Johanna Järvekülg       
-## [49] Susanna Mett             Carmen Šimanis          
-## [51] Eliisa Täht              Ketli Rihkrand          
-## [53] Kirsika Rahu             Richard Mõisaäär        
-## [55] Gerly Ots                Rauno Rauniste          
-## [57] Luisa Jõpiselg           Greete Kera             
-## [59] Maria Jõpiselg           Dummy 1                 
-## [61] Dummy 2                  Dummy 3                 
-## [63] Karl Saamuel Hollman    
-## 106 Levels: Aleksander Vunk Andreas Tulver ... Ärapanija</code></pre>
+<pre class="r"><code>tab = read.csv(&quot;C:/Users/carlm/Desktop/tab.csv&quot;, header = T, sep = &quot;;&quot;, encoding = &quot;UTF-8&quot;, dec = &quot;.&quot;, stringsAsFactors = F)
+speakers = tab[c(1:62),]
+meantotalavg = mean(na.omit(as.numeric(speakers$TOTALAVG)))
+print(meantotalavg)</code></pre>
+<pre><code>## [1] 70.5018</code></pre>
 
 
 

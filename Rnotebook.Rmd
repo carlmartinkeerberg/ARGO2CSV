@@ -1,0 +1,13 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+tab = read.csv("C:/Users/carlm/Desktop/tab.csv", header = T, sep = ";", encoding = "UTF-8", dec = ".", stringsAsFactors = F)
+speakers = tab[c(1:62),]
+meantotalavg = mean(na.omit(as.numeric(speakers$TOTALAVG)))
+print(meantotalavg)
+```

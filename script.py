@@ -700,12 +700,12 @@ if outf[-4:]!=".csv":
 f=open(outf, "w", encoding="UTF-8")
 
 #speakers
-c=0
-f.write("#;")
+#c=0
+#f.write("#;")
 f.write(speaker_header)
 for speaker in players:
     #id
-    f.write(str(c)+";")
+    #f.write(str(c)+";")
     
     #name
     f.write(speaker+";")
@@ -829,21 +829,21 @@ for speaker in players:
     f.write(str(speakerjudges[speaker][roundids[1]])+";")
     f.write(str(speakerjudges[speaker][roundids[2]])+";")
     f.write(str(speakerjudges[speaker][roundids[3]])+";")
-    f.write(str(speakerjudges[speaker][roundids[4]])+";")
+    f.write(str(speakerjudges[speaker][roundids[4]])+"")
 
     #newline
     f.write("\n")
 
-    c+=1
+    #c+=1
 
 #teams
-f.write("#;")
+#f.write("#;")
 f.write(team_header)
 
-c=0
+#c=0
 for team in teams:
     #id
-    f.write(str(c)+";")
+    #f.write(str(c)+";")
     
     #name
     f.write(team+";")
@@ -958,36 +958,55 @@ for team in teams:
     except:
         f.write(";")
     try:
-        f.write(opponents[team][roundids[4]]+";")
+        f.write(opponents[team][roundids[4]]+"")
+    except:
+        f.write("")
+
+    #newline
+    f.write("\n")
+
+    #c+=1
+
+#judges
+#f.write("#;")
+f.write(judge_header)
+#c=0
+
+for judge in teamjudges:
+    #id
+    #f.write(str(c)+";")
+    f.write(judge+";")
+
+    try:
+        f.write(teamjudges[judge][roundids[0]][0]+";")
+        f.write(teamjudges[judge][roundids[0]][1]+";")
+    except:
+        f.write(";;")
+    try:
+        f.write(teamjudges[judge][roundids[1]][0]+";")
+        f.write(teamjudges[judge][roundids[1]][1]+";")
+    except:
+        f.write(";;")
+    try:
+        f.write(teamjudges[judge][roundids[2]][0]+";")
+        f.write(teamjudges[judge][roundids[2]][1]+";")
+    except:
+        f.write(";;")
+    try:
+        f.write(teamjudges[judge][roundids[3]][0]+";")
+        f.write(teamjudges[judge][roundids[3]][1]+";")
+    except:
+        f.write(";;")
+    try:
+        f.write(teamjudges[judge][roundids[4]][0]+";")
+        f.write(teamjudges[judge][roundids[4]][1]+"")
     except:
         f.write(";")
 
     #newline
     f.write("\n")
 
-    c+=1
-
-#judges
-f.write("#;")
-f.write(judge_header)
-c=0
-
-for judge in teamjudges:
-    #id
-    f.write(str(c)+";")
-    f.write(judge+";")
-
-    for r in rounds:
-        try:
-            f.write(teamjudges[judge][r][0]+";")
-            f.write(teamjudges[judge][r][1]+";")
-        except:
-            f.write(";;")
-
-    #newline
-    f.write("\n")
-
-    c+=1
+    #c+=1
 
 f.close()
 
