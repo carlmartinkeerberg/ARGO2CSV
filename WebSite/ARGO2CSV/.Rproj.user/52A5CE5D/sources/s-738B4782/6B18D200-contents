@@ -1,0 +1,9 @@
+---
+title: "Projektist"
+output: html_notebook
+---
+
+[GitHub](https://github.com/carlmartinkeerberg/ARGO2CSV)
+
+##ARGO2CSV
+###Rakendus, mis võtab sisendiks ARGO .atab faili ja väljastab korrastatud .csv faili, mis võimaldab lihtsa vaevaga läbi viia statistilist analüüsi. Mõned näited on sellel lehel leitavad.

@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>KKEMV II etapp</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">ARGO2CSV</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Projektist</a>
+</li>
+<li>
+  <a href="kkemv2.html">KKEMV 2017/2018 II etapp</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">KKEMV II etapp</h1>
+
+</div>
+
+
+<pre class="r"><code>tab = read.csv(&quot;https://github.com/carlmartinkeerberg/ARGO2CSV/raw/master/IIetapp.csv&quot;,
+               header = T,
+               sep = &quot;;&quot;,
+               encoding = &quot;UTF-8&quot;,
+               dec = &quot;.&quot;,
+               stringsAsFactors = F)
+
+speakers = tab[c(1:62),]
+
+alltotalavg = na.omit(as.numeric(speakers$TOTALAVG))
+
+meantotalavg = mean(na.omit(as.numeric(speakers$TOTALAVG)))
+
+hist(alltotalavg,
+     main = &quot;Keskmised spiikripunktid&quot;,
+     xlab = &quot;Punktid&quot;,
+     ylab = &quot;Sagedus&quot;,
+     breaks = 6)
+
+abline(v = meantotalavg,
+       col = &quot;blue&quot;,
+       lwd = 2.5)
+
+legend(72.25, 20,
+       c(&quot;Aritm keskmine&quot;),
+       lwd = c(2.5),
+       col = c(&quot;blue&quot;))</code></pre>
+<p><img src="kkemv2_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code>library(knitr)
+
+kable(speakers,
+      caption = &quot;V?itlejad&quot;)</code></pre>
+<table>
+<caption>V?itlejad</caption>
+<thead>
+<tr class="header">
+<th align="left">SPEAKER</th>
+<th align="left">TEAM</th>
+<th align="left">SCHOOL</th>
+<th align="left">TOTALAVG</th>
+<th align="left">R1AVG</th>
+<th align="left">R2AVG</th>
+<th align="left">R3AVG</th>
+<th align="left">R4AVG</th>
+<th align="left">R5AVG</th>
+<th align="left">R1J1</th>
+<th align="left">R1J2</th>
+<th align="left">R1J3</th>
+<th align="left">R2J1</th>
+<th align="left">R2J2</th>
+<th align="left">R2J3</th>
+<th align="left">R3J1</th>
+<th align="left">R3J2</th>
+<th align="left">R3J3</th>
+<th align="left">R4J1</th>
+<th align="left">R4J2</th>
+<th align="left">R4J3</th>
+<th align="left">R5J1</th>
+<th align="left">R5J2</th>
+<th align="left">R5J3</th>
+<th align="left">R1J</th>
+<th align="left">R2J</th>
+<th align="left">R3J</th>
+<th align="left">R4J</th>
+<th align="left">R5J</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Karl Aaron Adson</td>
+<td align="left">Ärapanija</td>
+<td align="left">Sütevaka</td>
+<td align="left">68.67</td>
+<td align="left">69.67</td>
+<td align="left">69</td>
+<td align="left">71</td>
+<td align="left">69</td>
+<td align="left">68.67</td>
+<td align="left">70</td>
+<td align="left">69</td>
+<td align="left">67</td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">66.0</td>
+<td align="left">66</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Ruul (135)’, ‘Uku-Laur’, ‘Lauri’]</td>
+<td align="left">[‘Maria’, ‘Lauri’, ‘Kaur (234)’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Kaur (234)’]</td>
+<td align="left">[‘Andres Lestal’]</td>
+</tr>
+<tr class="even">
+<td align="left">Marie Maisvee</td>
+<td align="left">Ärapanija</td>
+<td align="left">Sütevaka</td>
+<td align="left">70.47</td>
+<td align="left">72.0</td>
+<td align="left">73</td>
+<td align="left">74</td>
+<td align="left">69</td>
+<td align="left">70.33</td>
+<td align="left">69</td>
+<td align="left">70</td>
+<td align="left">72</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Ruul (135)’, ‘Uku-Laur’, ‘Lauri’]</td>
+<td align="left">[‘Maria’, ‘Lauri’, ‘Kaur (234)’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Kaur (234)’]</td>
+<td align="left">[‘Andres Lestal’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Ela Lõhmus</td>
+<td align="left">Ärapanija</td>
+<td align="left">Sütevaka</td>
+<td align="left">68.4</td>
+<td align="left">70.67</td>
+<td align="left">70</td>
+<td align="left">73</td>
+<td align="left">69</td>
+<td align="left">68.33</td>
+<td align="left">69</td>
+<td align="left">69</td>
+<td align="left">67</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">65.0</td>
+<td align="left">65</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Ruul (135)’, ‘Uku-Laur’, ‘Lauri’]</td>
+<td align="left">[‘Maria’, ‘Lauri’, ‘Kaur (234)’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Kaur (234)’]</td>
+<td align="left">[‘Andres Lestal’]</td>
+</tr>
+<tr class="even">
+<td align="left">Joosep Radusepp</td>
+<td align="left">Buds</td>
+<td align="left">Koidula</td>
+<td align="left">71.13</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.33</td>
+<td align="left">71</td>
+<td align="left">70</td>
+<td align="left">73</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.33</td>
+<td align="left">70</td>
+<td align="left">70</td>
+<td align="left">71</td>
+<td align="left">[‘Vlad (134)’]</td>
+<td align="left">[‘Maarja’, ‘Doris Abe’, ‘Andreas Tulver’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maria’, ‘Heiki (45)’, ‘Lauri’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Mikkel Mäkelä</td>
+<td align="left">Buds</td>
+<td align="left">Koidula</td>
+<td align="left">71.33</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">74</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.67</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">[‘Vlad (134)’]</td>
+<td align="left">[‘Maarja’, ‘Doris Abe’, ‘Andreas Tulver’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maria’, ‘Heiki (45)’, ‘Lauri’]</td>
+</tr>
+<tr class="even">
+<td align="left">Kirke Külvik</td>
+<td align="left">Buds</td>
+<td align="left">Koidula</td>
+<td align="left">72.47</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left">73</td>
+<td align="left">73</td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.33</td>
+<td align="left">70</td>
+<td align="left">70</td>
+<td align="left">71</td>
+<td align="left">[‘Vlad (134)’]</td>
+<td align="left">[‘Maarja’, ‘Doris Abe’, ‘Andreas Tulver’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maria’, ‘Heiki (45)’, ‘Lauri’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Markus Vaher</td>
+<td align="left">Deb8tractive</td>
+<td align="left">HTG x2/MHG</td>
+<td align="left">71.27</td>
+<td align="left">71.33</td>
+<td align="left">71</td>
+<td align="left">73</td>
+<td align="left">70</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Ruul (135)’, ‘Uku-Laur’, ‘Lauri’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Robert Sarnet</td>
+<td align="left">Deb8tractive</td>
+<td align="left">HTG x2/MHG</td>
+<td align="left">70.27</td>
+<td align="left">71.33</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Ruul (135)’, ‘Uku-Laur’, ‘Lauri’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Jan Seilenthal</td>
+<td align="left">Deb8tractive</td>
+<td align="left">HTG x2/MHG</td>
+<td align="left">69.87</td>
+<td align="left">70.33</td>
+<td align="left">70</td>
+<td align="left">72</td>
+<td align="left">69</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Ruul (135)’, ‘Uku-Laur’, ‘Lauri’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Mari-Liis Lillebach</td>
+<td align="left">Debatonaator 5000</td>
+<td align="left">21./Reaal/RAM</td>
+<td align="left">71.8</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Uku-Laur’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Christina Kiik</td>
+<td align="left">Debatonaator 5000</td>
+<td align="left">21./Reaal/RAM</td>
+<td align="left">72.4</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Uku-Laur’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+</tr>
+<tr class="even">
+<td align="left">Hans Kristjan Veri</td>
+<td align="left">Debatonaator 5000</td>
+<td align="left">21./Reaal/RAM</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[‘Uku-Laur’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Anniki Mikelsaar</td>
+<td align="left">follow <span class="citation">@bossekass</span></td>
+<td align="left">HTG x2/MHG</td>
+<td align="left">72.27</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.33</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Kätliin (123)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Küüsmaa’, ‘Tuule (234)’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Ruul (135)’, ‘Küüsmaa’, ‘Uku-Laur’]</td>
+<td align="left">[‘Vlad (134)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Johanna Issak</td>
+<td align="left">follow <span class="citation">@bossekass</span></td>
+<td align="left">HTG x2/MHG</td>
+<td align="left">71.47</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.67</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">73</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.67</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Kätliin (123)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Küüsmaa’, ‘Tuule (234)’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Ruul (135)’, ‘Küüsmaa’, ‘Uku-Laur’]</td>
+<td align="left">[‘Vlad (134)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Brett-Peter Rästas</td>
+<td align="left">follow <span class="citation">@bossekass</span></td>
+<td align="left">HTG x2/MHG</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="even">
+<td align="left">Hendry Ollin</td>
+<td align="left">HMU</td>
+<td align="left">KG</td>
+<td align="left">70.8</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Kristin (24)’]</td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Maarja’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Mia Maripuu</td>
+<td align="left">HMU</td>
+<td align="left">KG</td>
+<td align="left">70.2</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Kristin (24)’]</td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Maarja’]</td>
+</tr>
+<tr class="even">
+<td align="left">Uko Rasmus Tildemann</td>
+<td align="left">HMU</td>
+<td align="left">KG</td>
+<td align="left">71.2</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Kristin (24)’]</td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Maarja’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Juudit Lindsalu</td>
+<td align="left">HTG 2</td>
+<td align="left">KG</td>
+<td align="left">71.4</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.33</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">71.67</td>
+<td align="left">71</td>
+<td align="left">74</td>
+<td align="left">70</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Vlad (134)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Küüsmaa’, ‘Tuule (234)’]</td>
+<td align="left">[‘Maarja’, ‘Kaur (234)’, ‘Richard’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Vlad (134)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Mihkel Mariusz Jezierski</td>
+<td align="left">HTG 2</td>
+<td align="left">KG</td>
+<td align="left">70.67</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left">70</td>
+<td align="left">70</td>
+<td align="left">71.33</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Vlad (134)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Küüsmaa’, ‘Tuule (234)’]</td>
+<td align="left">[‘Maarja’, ‘Kaur (234)’, ‘Richard’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Vlad (134)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Kätriin Pullerits</td>
+<td align="left">HTG 2</td>
+<td align="left">KG</td>
+<td align="left">71.67</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.67</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">71.67</td>
+<td align="left">70</td>
+<td align="left">74</td>
+<td align="left">71</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Vlad (134)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Küüsmaa’, ‘Tuule (234)’]</td>
+<td align="left">[‘Maarja’, ‘Kaur (234)’, ‘Richard’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Vlad (134)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Õnnely Roos</td>
+<td align="left">Justiitsministeerium</td>
+<td align="left">Koidula</td>
+<td align="left">70.4</td>
+<td align="left">71.0</td>
+<td align="left">70</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Küüsmaa’, ‘Andres Lestal’, ‘Richard’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+<td align="left">[‘Kristin (24)’]</td>
+<td align="left">[‘Heiki (45)’]</td>
+<td align="left">[‘Andreas Tulver’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Arianna Sofia Jater</td>
+<td align="left">Justiitsministeerium</td>
+<td align="left">Koidula</td>
+<td align="left">69.93</td>
+<td align="left">70.67</td>
+<td align="left">69</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Küüsmaa’, ‘Andres Lestal’, ‘Richard’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+<td align="left">[‘Kristin (24)’]</td>
+<td align="left">[‘Heiki (45)’]</td>
+<td align="left">[‘Andreas Tulver’]</td>
+</tr>
+<tr class="even">
+<td align="left">Kristiina Krause</td>
+<td align="left">Justiitsministeerium</td>
+<td align="left">Koidula</td>
+<td align="left">70.93</td>
+<td align="left">70.67</td>
+<td align="left">70</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Küüsmaa’, ‘Andres Lestal’, ‘Richard’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+<td align="left">[‘Kristin (24)’]</td>
+<td align="left">[‘Heiki (45)’]</td>
+<td align="left">[‘Andreas Tulver’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Oskar Samuel Rebane</td>
+<td align="left">Kaosus</td>
+<td align="left">TIK x2/Koidula</td>
+<td align="left">73.47</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.67</td>
+<td align="left">73</td>
+<td align="left">75</td>
+<td align="left">73</td>
+<td align="left">75.0</td>
+<td align="left">75</td>
+<td align="left">75</td>
+<td align="left">75</td>
+<td align="left">71.67</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">75</td>
+<td align="left">[‘Kätliin (123)’]</td>
+<td align="left">[‘Maria’, ‘Lauri’, ‘Kaur (234)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Uku-Laur’, ‘Vlad (134)’]</td>
+<td align="left">[‘Erik’, ‘Richard’, ‘Tuule (234)’]</td>
+<td align="left">[‘Maria’, ‘Heiki (45)’, ‘Lauri’]</td>
+</tr>
+<tr class="even">
+<td align="left">Saskia Bergmann</td>
+<td align="left">Kaosus</td>
+<td align="left">TIK x2/Koidula</td>
+<td align="left">72.87</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.67</td>
+<td align="left">72</td>
+<td align="left">74</td>
+<td align="left">72</td>
+<td align="left">73.67</td>
+<td align="left">74</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">72.0</td>
+<td align="left">71</td>
+<td align="left">74</td>
+<td align="left">71</td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">75</td>
+<td align="left">[‘Kätliin (123)’]</td>
+<td align="left">[‘Maria’, ‘Lauri’, ‘Kaur (234)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Uku-Laur’, ‘Vlad (134)’]</td>
+<td align="left">[‘Erik’, ‘Richard’, ‘Tuule (234)’]</td>
+<td align="left">[‘Maria’, ‘Heiki (45)’, ‘Lauri’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Triinu Jõgi</td>
+<td align="left">Kaosus</td>
+<td align="left">TIK x2/Koidula</td>
+<td align="left">73.47</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.33</td>
+<td align="left">73</td>
+<td align="left">75</td>
+<td align="left">72</td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left">74</td>
+<td align="left">74</td>
+<td align="left">73.0</td>
+<td align="left">72</td>
+<td align="left">75</td>
+<td align="left">72</td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left">74</td>
+<td align="left">74</td>
+<td align="left">[‘Kätliin (123)’]</td>
+<td align="left">[‘Maria’, ‘Lauri’, ‘Kaur (234)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Uku-Laur’, ‘Vlad (134)’]</td>
+<td align="left">[‘Erik’, ‘Richard’, ‘Tuule (234)’]</td>
+<td align="left">[‘Maria’, ‘Heiki (45)’, ‘Lauri’]</td>
+</tr>
+<tr class="even">
+<td align="left">Marta Margareeta Bender</td>
+<td align="left">Katoliku 1</td>
+<td align="left">Katoliku</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="odd">
+<td align="left">Triinu Lota Lepp</td>
+<td align="left">Katoliku 1</td>
+<td align="left">Katoliku</td>
+<td align="left">69.6</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">70</td>
+<td align="left">68</td>
+<td align="left">69</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Maarja’, ‘Doris Abe’, ‘Andreas Tulver’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Lauri’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Kaur Hannes Käämbre</td>
+<td align="left">Katoliku 1</td>
+<td align="left">Katoliku</td>
+<td align="left">68.73</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.67</td>
+<td align="left">69</td>
+<td align="left">69</td>
+<td align="left">68</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Maarja’, ‘Doris Abe’, ‘Andreas Tulver’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Lauri’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Lotta Vaher</td>
+<td align="left">Katoliku 1</td>
+<td align="left">Katoliku</td>
+<td align="left">70.27</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.33</td>
+<td align="left">71</td>
+<td align="left">69</td>
+<td align="left">71</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Maarja’, ‘Doris Abe’, ‘Andreas Tulver’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Lauri’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Kirke Antsmäe</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="odd">
+<td align="left">Kadri Muuga</td>
+<td align="left">Uus tiim</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">64.0</td>
+<td align="left">64</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Tuule (234)’]</td>
+<td align="left">[‘Kaur (234)’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+</tr>
+<tr class="even">
+<td align="left">Aleksander Vunk</td>
+<td align="left">kestaMesta</td>
+<td align="left"></td>
+<td align="left">72.27</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">76.0</td>
+<td align="left">76</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">70</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">72.33</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">74</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Uku-Laur’]</td>
+<td align="left">[‘Küüsmaa’, ‘Lauri’, ‘Tiks (345)’]</td>
+<td align="left">[‘Erik’, ‘Richard’, ‘Tuule (234)’]</td>
+<td align="left">[‘Küüsmaa’, ‘Erik’, ‘Doris Abe’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Tom Siuste</td>
+<td align="left">kestaMesta</td>
+<td align="left"></td>
+<td align="left">72.33</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.67</td>
+<td align="left">71</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72.33</td>
+<td align="left">73</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72.67</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">74</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Uku-Laur’]</td>
+<td align="left">[‘Küüsmaa’, ‘Lauri’, ‘Tiks (345)’]</td>
+<td align="left">[‘Erik’, ‘Richard’, ‘Tuule (234)’]</td>
+<td align="left">[‘Küüsmaa’, ‘Erik’, ‘Doris Abe’]</td>
+</tr>
+<tr class="even">
+<td align="left">Karl-Endrik Kriis</td>
+<td align="left">kestaMesta</td>
+<td align="left"></td>
+<td align="left">71.73</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">74.0</td>
+<td align="left">74</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.67</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">69</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left">71</td>
+<td align="left">73</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Uku-Laur’]</td>
+<td align="left">[‘Küüsmaa’, ‘Lauri’, ‘Tiks (345)’]</td>
+<td align="left">[‘Erik’, ‘Richard’, ‘Tuule (234)’]</td>
+<td align="left">[‘Küüsmaa’, ‘Erik’, ‘Doris Abe’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Gertin Kender</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="even">
+<td align="left">Karl Oskar Pungas</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="odd">
+<td align="left">Mattias Allpere</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="even">
+<td align="left">Norman de Vries</td>
+<td align="left">Kolmainsus</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">72</td>
+<td align="left">75</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Maarja’, ‘Kaur (234)’, ‘Richard’]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="odd">
+<td align="left">Eva Lotta Mett</td>
+<td align="left">Kolmainsus</td>
+<td align="left"></td>
+<td align="left">69.47</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.33</td>
+<td align="left">70</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Maarja’, ‘Kaur (234)’, ‘Richard’]</td>
+<td align="left">[‘Heiki (45)’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Anette Andersoo</td>
+<td align="left">Kolmainsus</td>
+<td align="left"></td>
+<td align="left">71.13</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.67</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">73</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Maarja’, ‘Kaur (234)’, ‘Richard’]</td>
+<td align="left">[‘Heiki (45)’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">James Paul Arney</td>
+<td align="left">May Contain Nuts</td>
+<td align="left"></td>
+<td align="left">74.13</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">77.0</td>
+<td align="left">77</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">74.67</td>
+<td align="left">76</td>
+<td align="left">74</td>
+<td align="left">74</td>
+<td align="left">73.33</td>
+<td align="left">73</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">72.67</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">71</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Uku-Laur’, ‘Vlad (134)’]</td>
+<td align="left">[‘Ruul (135)’, ‘Küüsmaa’, ‘Uku-Laur’]</td>
+<td align="left">[‘Küüsmaa’, ‘Erik’, ‘Doris Abe’]</td>
+</tr>
+<tr class="even">
+<td align="left">Karoliine Pärlin</td>
+<td align="left">May Contain Nuts</td>
+<td align="left"></td>
+<td align="left">72.4</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.67</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">74</td>
+<td align="left">71.33</td>
+<td align="left">70</td>
+<td align="left">73</td>
+<td align="left">71</td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">72</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Uku-Laur’, ‘Vlad (134)’]</td>
+<td align="left">[‘Ruul (135)’, ‘Küüsmaa’, ‘Uku-Laur’]</td>
+<td align="left">[‘Küüsmaa’, ‘Erik’, ‘Doris Abe’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Markus Laanoja</td>
+<td align="left">May Contain Nuts</td>
+<td align="left"></td>
+<td align="left">73.53</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">75.0</td>
+<td align="left">75</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">74.0</td>
+<td align="left">75</td>
+<td align="left">75</td>
+<td align="left">72</td>
+<td align="left">72.67</td>
+<td align="left">71</td>
+<td align="left">74</td>
+<td align="left">73</td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left">73</td>
+<td align="left">73</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Ruul (135)’]</td>
+<td align="left">[‘Kätliin (123)’, ‘Uku-Laur’, ‘Vlad (134)’]</td>
+<td align="left">[‘Ruul (135)’, ‘Küüsmaa’, ‘Uku-Laur’]</td>
+<td align="left">[‘Küüsmaa’, ‘Erik’, ‘Doris Abe’]</td>
+</tr>
+<tr class="even">
+<td align="left">Marie Valdes</td>
+<td align="left">Me ei lähe etapile, sest meil pole nime</td>
+<td align="left"></td>
+<td align="left">70.27</td>
+<td align="left">69.33</td>
+<td align="left">69</td>
+<td align="left">70</td>
+<td align="left">69</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">73.0</td>
+<td align="left">73</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Küüsmaa’, ‘Andres Lestal’, ‘Richard’]</td>
+<td align="left">[‘Richard’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[’Andres Lestal’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Johanna Järvekülg</td>
+<td align="left">Me ei lähe etapile, sest meil pole nime</td>
+<td align="left"></td>
+<td align="left">70.73</td>
+<td align="left">70.67</td>
+<td align="left">71</td>
+<td align="left">71</td>
+<td align="left">70</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Küüsmaa’, ‘Andres Lestal’, ‘Richard’]</td>
+<td align="left">[‘Richard’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[’Andres Lestal’]</td>
+</tr>
+<tr class="even">
+<td align="left">Susanna Mett</td>
+<td align="left">Me ei lähe etapile, sest meil pole nime</td>
+<td align="left"></td>
+<td align="left">70.53</td>
+<td align="left">69.67</td>
+<td align="left">69</td>
+<td align="left">70</td>
+<td align="left">70</td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Küüsmaa’, ‘Andres Lestal’, ‘Richard’]</td>
+<td align="left">[‘Richard’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[’Andres Lestal’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Carmen Šimanis</td>
+<td align="left">Uus tiim</td>
+<td align="left"></td>
+<td align="left">66.6</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">66.0</td>
+<td align="left">66</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">63.0</td>
+<td align="left">63</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Tuule (234)’]</td>
+<td align="left">[‘Kaur (234)’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+</tr>
+<tr class="even">
+<td align="left">Eliisa Täht</td>
+<td align="left">Null punkti</td>
+<td align="left"></td>
+<td align="left">67.2</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">63.0</td>
+<td align="left">63</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Richard’]</td>
+<td align="left">[‘Tuule (234)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Ketli Rihkrand</td>
+<td align="left">Null punkti</td>
+<td align="left"></td>
+<td align="left">66.2</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">64.0</td>
+<td align="left">64</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">64.0</td>
+<td align="left">64</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Richard’]</td>
+<td align="left">[‘Tuule (234)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+</tr>
+<tr class="even">
+<td align="left">Kirsika Rahu</td>
+<td align="left">Null punkti</td>
+<td align="left"></td>
+<td align="left">65.4</td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">63.0</td>
+<td align="left">63</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">64.0</td>
+<td align="left">64</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">66.0</td>
+<td align="left">66</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Richard’]</td>
+<td align="left">[‘Tuule (234)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+<td align="left">[‘Tiks (345)’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Richard Mõisaäär</td>
+<td align="left">Söörömöö</td>
+<td align="left"></td>
+<td align="left">69.8</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Lauri’]</td>
+<td align="left">[‘Andreas Tulver’]</td>
+</tr>
+<tr class="even">
+<td align="left">Gerly Ots</td>
+<td align="left">Söörömöö</td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Lauri’]</td>
+<td align="left">[‘Andreas Tulver’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Rauno Rauniste</td>
+<td align="left">Söörömöö</td>
+<td align="left"></td>
+<td align="left">69.4</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">72.0</td>
+<td align="left">72</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Kaspar (123)’]</td>
+<td align="left">[‘Maria’]</td>
+<td align="left">[‘Lauri’]</td>
+<td align="left">[‘Andreas Tulver’]</td>
+</tr>
+<tr class="even">
+<td align="left">Luisa Jõpiselg</td>
+<td align="left">See väitlus oli väga tasavägine</td>
+<td align="left"></td>
+<td align="left">68.87</td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.33</td>
+<td align="left">69</td>
+<td align="left">69</td>
+<td align="left">67</td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Küüsmaa’, ‘Lauri’, ‘Tiks (345)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maarja’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Greete Kera</td>
+<td align="left">See väitlus oli väga tasavägine</td>
+<td align="left"></td>
+<td align="left">69.07</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.33</td>
+<td align="left">70</td>
+<td align="left">69</td>
+<td align="left">69</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Küüsmaa’, ‘Lauri’, ‘Tiks (345)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maarja’]</td>
+</tr>
+<tr class="even">
+<td align="left">Maria Jõpiselg</td>
+<td align="left">See väitlus oli väga tasavägine</td>
+<td align="left"></td>
+<td align="left">68.4</td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">68.0</td>
+<td align="left">68</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left">68</td>
+<td align="left">66</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">70.0</td>
+<td align="left">70</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Erik’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Küüsmaa’, ‘Lauri’, ‘Tiks (345)’]</td>
+<td align="left">[‘Doris Abe’]</td>
+<td align="left">[‘Maarja’]</td>
+</tr>
+<tr class="odd">
+<td align="left">Dummy 1</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="even">
+<td align="left">Dummy 2</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="odd">
+<td align="left">Dummy 3</td>
+<td align="left">No Team</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+<td align="left">[]</td>
+</tr>
+<tr class="even">
+<td align="left">Karl Saamuel Hollman</td>
+<td align="left">Uus tiim</td>
+<td align="left"></td>
+<td align="left">68.2</td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">67.0</td>
+<td align="left">67</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">65.0</td>
+<td align="left">65</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">71.0</td>
+<td align="left">71</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">69.0</td>
+<td align="left">69</td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">[‘Maarja’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+<td align="left">[‘Tuule (234)’]</td>
+<td align="left">[‘Kaur (234)’]</td>
+<td align="left">[‘Rauno Kivimägi’]</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

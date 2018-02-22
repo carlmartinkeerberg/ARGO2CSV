@@ -1,0 +1,44 @@
+---
+title: "KKEMV II etapp"
+output:
+  html_document:
+    df_print: paged
+---
+
+```{r}
+tab = read.csv("https://github.com/carlmartinkeerberg/ARGO2CSV/raw/master/IIetapp.csv",
+               header = T,
+               sep = ";",
+               encoding = "UTF-8",
+               dec = ".",
+               stringsAsFactors = F)
+
+speakers = tab[c(1:62),]
+
+alltotalavg = na.omit(as.numeric(speakers$TOTALAVG))
+
+meantotalavg = mean(na.omit(as.numeric(speakers$TOTALAVG)))
+
+hist(alltotalavg,
+     main = "Keskmised spiikripunktid",
+     xlab = "Punktid",
+     ylab = "Sagedus",
+     breaks = 6)
+
+abline(v = meantotalavg,
+       col = "blue",
+       lwd = 2.5)
+
+legend(72.25, 20,
+       c("Aritm keskmine"),
+       lwd = c(2.5),
+       col = c("blue"))
+```
+
+```{r}
+library(knitr)
+
+kable(speakers,
+      caption = "V?itlejad")
+```
+

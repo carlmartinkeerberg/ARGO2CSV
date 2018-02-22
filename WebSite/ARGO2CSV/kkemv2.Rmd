@@ -39,6 +39,6 @@ legend(72.25, 20,
 library(knitr)
 
 kable(speakers,
-      caption = "Väitlejad")
+      caption = "V?itlejad")
 ```
 

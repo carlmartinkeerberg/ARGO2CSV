@@ -1,0 +1,8 @@
+name: "ARGO2CSV"
+navbar:
+  title: "ARGO2CSV"
+  left:
+    - text: "Projektist"
+      href: index.html
+    - text: "KKEMV 2017/2018 II etapp"
+      href: kkemv2.html
