@@ -728,12 +728,38 @@ for speaker in players:
     except:
         f.write(";")
 
-    #round1
-    r=list(rounds.keys())[0]
+    #AVG
+    r=list(rounds.keys())
+    r1=r[0]
+    r2=r[1]
+    r3=r[2]
+    r4=r[3]
+    r5=r[4]
+    
     try:
-        f.write(str(speaksbyround[speaker][r])+";")
+        f.write(str(speaksbyround[speaker][r1])+";")
     except:
         f.write(";")
+    try:
+        f.write(str(speaksbyround[speaker][r2])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speaksbyround[speaker][r3])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speaksbyround[speaker][r4])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speaksbyround[speaker][r5])+";")
+    except:
+        f.write(";")
+
+    #round1
+    r=list(rounds.keys())[0]
+    
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
@@ -749,10 +775,7 @@ for speaker in players:
 
     #round2
     r=list(rounds.keys())[1]
-    try:
-        f.write(str(speaksbyround[speaker][r])+";")
-    except:
-        f.write(";")
+    
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
@@ -768,10 +791,7 @@ for speaker in players:
 
     #round3
     r=list(rounds.keys())[2]
-    try:
-        f.write(str(speaksbyround[speaker][r])+";")
-    except:
-        f.write(";")
+    
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
@@ -787,10 +807,7 @@ for speaker in players:
 
     #round4
     r=list(rounds.keys())[3]
-    try:
-        f.write(str(speaksbyround[speaker][r])+";")
-    except:
-        f.write(";")
+    
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
@@ -806,10 +823,7 @@ for speaker in players:
 
     #round5
     r=list(rounds.keys())[4]
-    try:
-        f.write(str(speaksbyround[speaker][r])+";")
-    except:
-        f.write(";")
+    
     try:
         f.write(pers_speaks[speaker][r][0]+";")
     except:
