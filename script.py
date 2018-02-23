@@ -690,7 +690,7 @@ for team in teams:
 
 outf=filedialog.asksaveasfilename(initialdir = "/",title = "Vali asukoht",filetypes = (("csv fail","*.csv"),("kõik failid","*.*")))               
 
-speaker_header=("SPEAKER;TEAM;SCHOOL;TOTALAVG;R1AVG;R2AVG;R3AVG;R4AVG;R5AVG;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1J;R2J;R3J;R4J;R5J\n")
+speaker_header=("SPEAKER;TEAM;SCHOOL;TOTALAVG;R1AVG;R2AVG;R3AVG;R4AVG;R5AVG;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3\n")
 team_header=("TEAM;TOTAL;R1;R2;R3;R4;R4;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1VS;R2VS;R3VS;R4VS;R5VS\n")
 judge_header=("JUDGE;R1P;R1O;R2P;R20;R3P;R3O;R4P;R4O;R5P;R5O\n")
 
@@ -825,11 +825,71 @@ for speaker in players:
 
     #judges
     roundids=list(rounds.keys())
-    f.write(str(speakerjudges[speaker][roundids[0]])+";")
-    f.write(str(speakerjudges[speaker][roundids[1]])+";")
-    f.write(str(speakerjudges[speaker][roundids[2]])+";")
-    f.write(str(speakerjudges[speaker][roundids[3]])+";")
-    f.write(str(speakerjudges[speaker][roundids[4]])+"")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[0]][0])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[0]][1])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[0]][2])+";")
+    except:
+        f.write(";")
+
+    try:
+        f.write(str(speakerjudges[speaker][roundids[1]][0])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[1]][1])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[1]][2])+";")
+    except:
+        f.write(";")
+
+    try:
+        f.write(str(speakerjudges[speaker][roundids[2]][0])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[2]][1])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[2]][2])+";")
+    except:
+        f.write(";")
+
+    try:
+        f.write(str(speakerjudges[speaker][roundids[3]][0])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[3]][1])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[3]][2])+";")
+    except:
+        f.write(";")
+
+    try:
+        f.write(str(speakerjudges[speaker][roundids[4]][0])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[4]][1])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(speakerjudges[speaker][roundids[4]][2])+"")
+    except:
+        f.write("")
+  
 
     #newline
     f.write("\n")
