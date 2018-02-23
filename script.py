@@ -607,7 +607,8 @@ for name in pers_speaks:
         allspeaks=pers_speaks[name][r]
         intspeaks=[]
         for score in allspeaks:
-            intspeaks.append(int(score))
+            if score!="":
+                intspeaks.append(int(score))
         try:
             speaksbyround[name][r]=round(sum(intspeaks)/len(intspeaks),2)
         except:
@@ -617,12 +618,12 @@ allspeaks={}
 for name in pers_speaks:
     totalspeaks=[]
     for r in speaks:
-        totalspeaks.append(speaksbyround[name][r])
+        if speaksbyround[name][r]!="":
+            totalspeaks.append(speaksbyround[name][r])
     try:
         allspeaks[name]=round(sum(totalspeaks)/len(totalspeaks), 2)
     except:
         allspeaks[name]=""
-            
     
 teamballots={}
 for name in teams:
