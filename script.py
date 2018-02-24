@@ -686,14 +686,37 @@ for team in teams:
                 opponents[team][r]=rounds[r][b]["Teams"][1]
             elif rounds[r][b]["Teams"][1]==team:
                 opponents[team][r]=rounds[r][b]["Teams"][0]
+
+judgespeaks={}
+for r in rounds:
+    judgespeaks[r]={}
+    for b in rounds[r]:
+        for j in rounds[r][b]["Judges"]:
+            judgespeaks[r][j]={}
+            prop=rounds[r][b]["Judges"][j]["Scores_Prop"]
+            opp=rounds[r][b]["Judges"][j]["Scores_Opp"]
+            intprop=[]
+            intopp=[]
+            for s in prop:
+                try:
+                    intprop.append(float(s))
+                except:
+                    intprop.append(0)
+            for s in opp:
+                try:
+                    intopp.append(float(s))
+                except:
+                    intopp.append(0)
+            judgespeaks[r][j]["Prop"]=sum(intprop)
+            judgespeaks[r][j]["Opp"]=sum(intopp)
             
         
 
 outf=filedialog.asksaveasfilename(initialdir = "/",title = "Vali asukoht",filetypes = (("csv fail","*.csv"),("kõik failid","*.*")))               
 
-speaker_header=("SPEAKER;TEAM;SCHOOL;TOTALAVG;R1AVG;R2AVG;R3AVG;R4AVG;R5AVG;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3\n")
+speaker_header=("SPEAKER;TEAM;SCHOOL;TOTALAVG;R1AVG;R2AVG;R3AVG;R4AVG;R5AVG;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1J1NAME;R1J2NAME;R1J3NAME;R2J1NAME;R2J2NAME;R2J3NAME;R3J1NAME;R3J2NAME;R3J3NAME;R4J1NAME;R4J2NAME;R4J3NAME;R5J1NAME;R5J2NAME;R5J3NAME\n")
 team_header=("TEAM;TOTAL;R1;R2;R3;R4;R4;R1J1;R1J2;R1J3;R2J1;R2J2;R2J3;R3J1;R3J2;R3J3;R4J1;R4J2;R4J3;R5J1;R5J2;R5J3;R1VS;R2VS;R3VS;R4VS;R5VS\n")
-judge_header=("JUDGE;R1P;R1O;R2P;R20;R3P;R3O;R4P;R4O;R5P;R5O\n")
+judge_header=("JUDGE;R1PNAME;R1ONAME;R2PNAME;R20NAME;R3PNAME;R3ONAME;R4PNAME;R4ONAME;R5PNAME;R5ONAME;R1P;R1O;R2P;R2O;R3P;R3O;R4P;R4O;R5P;R5O\n")
 
 if outf[-4:]!=".csv":
     outf=outf+".csv"
@@ -1074,9 +1097,51 @@ for judge in teamjudges:
         f.write(";;")
     try:
         f.write(teamjudges[judge][roundids[4]][0]+";")
-        f.write(teamjudges[judge][roundids[4]][1]+"")
+        f.write(teamjudges[judge][roundids[4]][1]+";")
+    except:
+        f.write(";;")
+
+    try:
+        f.write(str(judgespeaks[roundids[0]][judge]["Prop"])+";")
     except:
         f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[0]][judge]["Opp"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[1]][judge]["Prop"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[1]][judge]["Opp"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[2]][judge]["Prop"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[2]][judge]["Opp"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[3]][judge]["Prop"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[3]][judge]["Opp"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[4]][judge]["Prop"])+";")
+    except:
+        f.write(";")
+    try:
+        f.write(str(judgespeaks[roundids[4]][judge]["Opp"])+"")
+    except:
+        f.write("")
+
 
     #newline
     f.write("\n")
