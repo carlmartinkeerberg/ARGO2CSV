@@ -707,8 +707,8 @@ for r in rounds:
                     intopp.append(float(s))
                 except:
                     intopp.append(0)
-            judgespeaks[r][j]["Prop"]=sum(intprop)
-            judgespeaks[r][j]["Opp"]=sum(intopp)
+            judgespeaks[r][j]["Prop"]=sum(intprop[:-1])
+            judgespeaks[r][j]["Opp"]=sum(intopp[:-1])
             
         
 
