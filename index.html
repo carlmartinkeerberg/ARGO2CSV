@@ -13,8 +13,97 @@
         </div>
 		
 		<div class="container-fluid">
-            
+            <div class="row">
+                <div class="col">
+                    <form>
+                        <div class="form-group">            
+                            <button type="button" class="btn btn-primary btn-block" id="uploadButton" onclick="uploadMock()">Upload .atab</button>
+                            <input type="file" accept=".atab" class="form-control-file" hidden id="uploadInput" onchange="upload(this)"> 
+                        </div>                  
+                    </form>
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-success btn-block" id="downloadButton" onclick="download()" disabled>Download.csv</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div id="judges"></div>
+                </div>
+                <div class="col">
+                    <div id="speakers"></div>
+                </div>
+                <div class="col">
+                    <div id="teams"></div>
+                </div>
+            </div>
         </div>
+
+        <script type="text/javascript">
+            function uploadMock() {
+                document.getElementById('uploadInput').click();
+            }
+
+            function upload(context) {
+                if (context.files && context.files[0]) {
+                    var file = context.files[0];
+                    var fileReader = new FileReader();
+                    fileReader.readAsText(file, "UTF-8");
+                    fileReader.onload = function (f) {
+                        tab = JSON.parse(f.target.result);
+                        console.log(tab);
+                        process(tab);
+                    }
+                }
+            }
+
+            function download() {
+            }
+
+            function process(json) {
+                var title = json.title;
+                var tab = json.v1;
+
+                var judges = tab.judges;
+                var speakers = tab.players;
+                var teams = tab.teams;
+                var rounds = tab.rounds;
+
+                var judgesList = document.createElement("ul");
+                judgesList.className = "list-group list-group-flush";
+                var judgesListItem;
+                judges.forEach(judge => {
+                    judgesListItem = document.createElement("li");
+                    judgesListItem.className = "list-group-item";
+                    judgesListItem.appendChild(document.createTextNode(judge.name));
+                    judgesList.appendChild(judgesListItem);
+                });
+                document.getElementById("judges").appendChild(judgesList);
+
+                var speakersList = document.createElement("ul");
+                speakersList.className = "list-group list-group-flush";
+                var speakersListItem;
+                speakers.forEach(speaker => {
+                    speakersListItem = document.createElement("li");
+                    speakersListItem.className = "list-group-item";
+                    speakersListItem.appendChild(document.createTextNode(speaker.name));
+                    speakersList.appendChild(speakersListItem);
+                });
+                document.getElementById("speakers").appendChild(speakersList);
+
+                var teamsList = document.createElement("ul");
+                teamsList.className = "list-group list-group-flush";
+                var teamsListItem;
+                teams.forEach(speaker => {
+                    teamsListItem = document.createElement("li");
+                    teamsListItem.className = "list-group-item";
+                    teamsListItem.appendChild(document.createTextNode(speaker.name));
+                    teamsList.appendChild(teamsListItem);
+                });
+                document.getElementById("teams").appendChild(teamsList);
+            }
+
+        </script>
 
     </body>
 </html>
