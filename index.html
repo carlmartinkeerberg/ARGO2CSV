@@ -3,6 +3,8 @@
     <title>Carl-Martin Keerberg</title>
     <head>
         <script type=text/javascript src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="papaparse.min.js"></script>
+        <script src="json.js" type="text/javascript"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     </head>
 
@@ -57,8 +59,8 @@
                 }
             }
 
-            function download() {
-            }
+            //function download() {
+            //}
 
             function process(json) {
                 var title = json.title;
@@ -68,9 +70,22 @@
                 var speakers = tab.players;
                 var teams = tab.teams;
                 var rounds = tab.rounds;
-
+                
                 var judgesList = document.createElement("ul");
                 judgesList.className = "list-group list-group-flush";
+
+                var judgesListLabel = document.createElement("li");
+                judgesListLabel.className = "list-group-item d-flex justify-content-between align-items-center";
+                var judgesListLabelStrong = document.createElement("strong");
+                var judgesListLabelText = document.createTextNode("Judges");
+                judgesListLabelStrong.appendChild(judgesListLabelText);
+                judgesListLabel.appendChild(judgesListLabelStrong);
+                var judgesListCount = document.createElement("span");
+                judgesListCount.className = "badge badge-primary badge-pill";
+                judgesListCount.appendChild(document.createTextNode(judges.length));
+                judgesListLabel.appendChild(judgesListCount);
+                judgesList.appendChild(judgesListLabel);
+
                 var judgesListItem;
                 judges.forEach(judge => {
                     judgesListItem = document.createElement("li");
@@ -82,6 +97,19 @@
 
                 var speakersList = document.createElement("ul");
                 speakersList.className = "list-group list-group-flush";
+
+                var speakersListLabel = document.createElement("li");
+                speakersListLabel.className = "list-group-item d-flex justify-content-between align-items-center";
+                var speakersListLabelStrong = document.createElement("strong");
+                var speakersListLabelText = document.createTextNode("Speakers");
+                speakersListLabelStrong.appendChild(speakersListLabelText);
+                speakersListLabel.appendChild(speakersListLabelStrong);
+                var speakersListCount = document.createElement("span");
+                speakersListCount.className = "badge badge-primary badge-pill";
+                speakersListCount.appendChild(document.createTextNode(speakers.length));
+                speakersListLabel.appendChild(speakersListCount);
+                speakersList.appendChild(speakersListLabel);
+
                 var speakersListItem;
                 speakers.forEach(speaker => {
                     speakersListItem = document.createElement("li");
@@ -93,6 +121,19 @@
 
                 var teamsList = document.createElement("ul");
                 teamsList.className = "list-group list-group-flush";
+
+                var teamsListLabel = document.createElement("li");
+                teamsListLabel.className = "list-group-item d-flex justify-content-between align-items-center";
+                var teamsListLabelStrong = document.createElement("strong");
+                var teamsListLabelText = document.createTextNode("Teams");
+                teamsListLabelStrong.appendChild(teamsListLabelText);
+                teamsListLabel.appendChild(teamsListLabelStrong);
+                var teamsListCount = document.createElement("span");
+                teamsListCount.className = "badge badge-primary badge-pill";
+                teamsListCount.appendChild(document.createTextNode(teams.length));
+                teamsListLabel.appendChild(teamsListCount);
+                teamsList.appendChild(teamsListLabel);
+
                 var teamsListItem;
                 teams.forEach(speaker => {
                     teamsListItem = document.createElement("li");
@@ -101,7 +142,72 @@
                     teamsList.appendChild(teamsListItem);
                 });
                 document.getElementById("teams").appendChild(teamsList);
+                
+                var csv = {
+                    "SPEAKER": [],
+                    "TEAM": [],
+                    "SCHOOL": [],
+                };
+
+                tab.players.forEach(player => {
+                    //Kõneleja nimi
+                    csv.SPEAKER.push(player.name);
+
+                    //Tiimi nimi
+                    if (player.team == -1) {
+                        csv.TEAM.push("-");
+                    } else {
+                        csv.TEAM.push(
+                            tab.teams[player.team].name
+                        );
+                    }
+
+                    //Kooli nimi
+                    if (player.team == -1 || tab.teams[player.team].club == -1) {
+                        csv.SCHOOL.push("-");
+                    } else {
+                        csv.SCHOOL.push(
+                            tab.clubs[tab.teams[player.team].club].name
+                        );
+                    }
+
+
+                    
+
+
+                });
+
+                console.log(csv);
+                //DownloadJSON2CSV(csv);
+
             }
+
+            function DownloadJSON2CSV(objArray)
+            {
+                var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+
+                var str = '';
+
+                for (var i = 0; i < array.length; i++) {
+                    var line = '';
+
+                    for (var index in array[i]) {
+                        line += array[i][index] + ',';
+                    }
+
+                    // Here is an example where you would wrap the values in double quotes
+                    // for (var index in array[i]) {
+                    //    line += '"' + array[i][index] + '",';
+                    // }
+
+                    line.slice(0,line.Length-1); 
+
+                    str += line + '\r\n';
+                }
+                window.open( "data:text/csv;charset=utf-8," + escape(str))
+            }
+
+            
 
         </script>
 
